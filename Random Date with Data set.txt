@@ -1,0 +1,29 @@
+options mprint mlogic symbolgen;
+
+%let start=01/01/2015;
+%let end= 01/01/2018;
+
+data _null_;
+start=input("&start",ddmmyy10.);
+end=input("&end",ddmmyy10.);
+interval=end - start;
+call symput ('start',put(start,best.));
+call symput ('interval',put(interval,best.));
+run;
+
+
+data nn;
+set query_for_v_agg_slrv_final_5;
+format newdate ddmmyy10.;
+newdate=  &start + RAND("uniform") * &interval;
+run;
+ 
+
+data nn2;
+set query_for_v_agg_slrv_final_5;
+format a b newdt date9.;
+call streaminit (123);
+a="01JAN2015"d;
+b="01JAN2018"d;
+newdt="01JAN2015"d + floor ((b-a) * rand("uniform"));
+run;
