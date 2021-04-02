@@ -13,14 +13,14 @@ run;
 
 
 data nn;
-set query_for_v_agg_slrv_final_5;
+set sashelp.cars;
 format newdate ddmmyy10.;
 newdate=  &start + RAND("uniform") * &interval;
 run;
  
 
 data nn2;
-set query_for_v_agg_slrv_final_5;
+set sashelp.cars;
 format a b newdt date9.;
 call streaminit (123);
 a="01JAN2015"d;
